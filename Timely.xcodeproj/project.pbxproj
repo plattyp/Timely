@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		820AE4B719FF9AE4002E9809 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4B619FF9AE4002E9809 /* AppDelegate.swift */; };
+		820AE4BA19FF9AE4002E9809 /* Timely.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4B819FF9AE4002E9809 /* Timely.xcdatamodeld */; };
+		820AE4BC19FF9AE4002E9809 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4BB19FF9AE4002E9809 /* ViewController.swift */; };
+		820AE4BF19FF9AE4002E9809 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 820AE4BD19FF9AE4002E9809 /* Main.storyboard */; };
+		820AE4C119FF9AE4002E9809 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 820AE4C019FF9AE4002E9809 /* Images.xcassets */; };
+		820AE4C419FF9AE4002E9809 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 820AE4C219FF9AE4002E9809 /* LaunchScreen.xib */; };
+		820AE4D019FF9AE4002E9809 /* TimelyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4CF19FF9AE4002E9809 /* TimelyTests.swift */; };
+		820AE4DA19FF9C19002E9809 /* TimerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */; };
+		820AE4DC19FF9DC6002E9809 /* TimerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */; };
+		820AE4DE19FFADE5002E9809 /* AddTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4DD19FFADE5002E9809 /* AddTimerViewController.swift */; };
+		82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F007231A093BCB00AF77CE /* TimersDefined.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		820AE4CA19FF9AE4002E9809 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 820AE4A919FF9AE4002E9809 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 820AE4B019FF9AE4002E9809;
+			remoteInfo = Timely;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		820AE4B119FF9AE4002E9809 /* Timely.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timely.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		820AE4B519FF9AE4002E9809 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		820AE4B619FF9AE4002E9809 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		820AE4B919FF9AE4002E9809 /* Timely.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Timely.xcdatamodel; sourceTree = "<group>"; };
+		820AE4BB19FF9AE4002E9809 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		820AE4BE19FF9AE4002E9809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		820AE4C019FF9AE4002E9809 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		820AE4C319FF9AE4002E9809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		820AE4C919FF9AE4002E9809 /* TimelyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimelyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		820AE4CE19FF9AE4002E9809 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		820AE4CF19FF9AE4002E9809 /* TimelyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelyTests.swift; sourceTree = "<group>"; };
+		820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerTableViewController.swift; sourceTree = "<group>"; };
+		820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerTableViewCell.swift; sourceTree = "<group>"; };
+		820AE4DD19FFADE5002E9809 /* AddTimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTimerViewController.swift; sourceTree = "<group>"; };
+		82F007231A093BCB00AF77CE /* TimersDefined.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimersDefined.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		820AE4AE19FF9AE4002E9809 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820AE4C619FF9AE4002E9809 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		820AE4A819FF9AE4002E9809 = {
+			isa = PBXGroup;
+			children = (
+				820AE4B319FF9AE4002E9809 /* Timely */,
+				820AE4CC19FF9AE4002E9809 /* TimelyTests */,
+				820AE4B219FF9AE4002E9809 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		820AE4B219FF9AE4002E9809 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				820AE4B119FF9AE4002E9809 /* Timely.app */,
+				820AE4C919FF9AE4002E9809 /* TimelyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		820AE4B319FF9AE4002E9809 /* Timely */ = {
+			isa = PBXGroup;
+			children = (
+				820AE4B619FF9AE4002E9809 /* AppDelegate.swift */,
+				820AE4BB19FF9AE4002E9809 /* ViewController.swift */,
+				820AE4BD19FF9AE4002E9809 /* Main.storyboard */,
+				820AE4DD19FFADE5002E9809 /* AddTimerViewController.swift */,
+				820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */,
+				820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */,
+				820AE4C019FF9AE4002E9809 /* Images.xcassets */,
+				820AE4C219FF9AE4002E9809 /* LaunchScreen.xib */,
+				820AE4B819FF9AE4002E9809 /* Timely.xcdatamodeld */,
+				82F007231A093BCB00AF77CE /* TimersDefined.swift */,
+				820AE4B419FF9AE4002E9809 /* Supporting Files */,
+			);
+			path = Timely;
+			sourceTree = "<group>";
+		};
+		820AE4B419FF9AE4002E9809 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				820AE4B519FF9AE4002E9809 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		820AE4CC19FF9AE4002E9809 /* TimelyTests */ = {
+			isa = PBXGroup;
+			children = (
+				820AE4CF19FF9AE4002E9809 /* TimelyTests.swift */,
+				820AE4CD19FF9AE4002E9809 /* Supporting Files */,
+			);
+			path = TimelyTests;
+			sourceTree = "<group>";
+		};
+		820AE4CD19FF9AE4002E9809 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				820AE4CE19FF9AE4002E9809 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		820AE4B019FF9AE4002E9809 /* Timely */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 820AE4D319FF9AE4002E9809 /* Build configuration list for PBXNativeTarget "Timely" */;
+			buildPhases = (
+				820AE4AD19FF9AE4002E9809 /* Sources */,
+				820AE4AE19FF9AE4002E9809 /* Frameworks */,
+				820AE4AF19FF9AE4002E9809 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Timely;
+			productName = Timely;
+			productReference = 820AE4B119FF9AE4002E9809 /* Timely.app */;
+			productType = "com.apple.product-type.application";
+		};
+		820AE4C819FF9AE4002E9809 /* TimelyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 820AE4D619FF9AE4002E9809 /* Build configuration list for PBXNativeTarget "TimelyTests" */;
+			buildPhases = (
+				820AE4C519FF9AE4002E9809 /* Sources */,
+				820AE4C619FF9AE4002E9809 /* Frameworks */,
+				820AE4C719FF9AE4002E9809 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				820AE4CB19FF9AE4002E9809 /* PBXTargetDependency */,
+			);
+			name = TimelyTests;
+			productName = TimelyTests;
+			productReference = 820AE4C919FF9AE4002E9809 /* TimelyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		820AE4A919FF9AE4002E9809 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = PlattypusLabs;
+				TargetAttributes = {
+					820AE4B019FF9AE4002E9809 = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = MFGFH5369T;
+					};
+					820AE4C819FF9AE4002E9809 = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 820AE4B019FF9AE4002E9809;
+					};
+				};
+			};
+			buildConfigurationList = 820AE4AC19FF9AE4002E9809 /* Build configuration list for PBXProject "Timely" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 820AE4A819FF9AE4002E9809;
+			productRefGroup = 820AE4B219FF9AE4002E9809 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				820AE4B019FF9AE4002E9809 /* Timely */,
+				820AE4C819FF9AE4002E9809 /* TimelyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		820AE4AF19FF9AE4002E9809 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820AE4BF19FF9AE4002E9809 /* Main.storyboard in Resources */,
+				820AE4C419FF9AE4002E9809 /* LaunchScreen.xib in Resources */,
+				820AE4C119FF9AE4002E9809 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820AE4C719FF9AE4002E9809 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		820AE4AD19FF9AE4002E9809 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820AE4BC19FF9AE4002E9809 /* ViewController.swift in Sources */,
+				820AE4DA19FF9C19002E9809 /* TimerTableViewController.swift in Sources */,
+				820AE4DE19FFADE5002E9809 /* AddTimerViewController.swift in Sources */,
+				820AE4DC19FF9DC6002E9809 /* TimerTableViewCell.swift in Sources */,
+				82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */,
+				820AE4B719FF9AE4002E9809 /* AppDelegate.swift in Sources */,
+				820AE4BA19FF9AE4002E9809 /* Timely.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		820AE4C519FF9AE4002E9809 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820AE4D019FF9AE4002E9809 /* TimelyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		820AE4CB19FF9AE4002E9809 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 820AE4B019FF9AE4002E9809 /* Timely */;
+			targetProxy = 820AE4CA19FF9AE4002E9809 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		820AE4BD19FF9AE4002E9809 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				820AE4BE19FF9AE4002E9809 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		820AE4C219FF9AE4002E9809 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				820AE4C319FF9AE4002E9809 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		820AE4D119FF9AE4002E9809 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		820AE4D219FF9AE4002E9809 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		820AE4D419FF9AE4002E9809 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Timely/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		820AE4D519FF9AE4002E9809 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Timely/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		820AE4D719FF9AE4002E9809 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TimelyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Timely.app/Timely";
+			};
+			name = Debug;
+		};
+		820AE4D819FF9AE4002E9809 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TimelyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Timely.app/Timely";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		820AE4AC19FF9AE4002E9809 /* Build configuration list for PBXProject "Timely" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820AE4D119FF9AE4002E9809 /* Debug */,
+				820AE4D219FF9AE4002E9809 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		820AE4D319FF9AE4002E9809 /* Build configuration list for PBXNativeTarget "Timely" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820AE4D419FF9AE4002E9809 /* Debug */,
+				820AE4D519FF9AE4002E9809 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		820AE4D619FF9AE4002E9809 /* Build configuration list for PBXNativeTarget "TimelyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820AE4D719FF9AE4002E9809 /* Debug */,
+				820AE4D819FF9AE4002E9809 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		820AE4B819FF9AE4002E9809 /* Timely.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				820AE4B919FF9AE4002E9809 /* Timely.xcdatamodel */,
+			);
+			currentVersion = 820AE4B919FF9AE4002E9809 /* Timely.xcdatamodel */;
+			path = Timely.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 820AE4A919FF9AE4002E9809 /* Project object */;
+}

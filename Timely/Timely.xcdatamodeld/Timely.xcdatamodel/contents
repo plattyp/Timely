@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="TimersDefined" representedClassName="Timely.TimersDefined" syncable="YES">
+        <attribute name="startedIndicator" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="timerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timerSeconds" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="timeStarted" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="TimersDefined" positionX="-63" positionY="-18" width="128" height="103"/>
+    </elements>
+</model>
