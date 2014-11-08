@@ -16,7 +16,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-Timely/AppDelegate.swift
+Timely/properties.plist
 
 # CocoaPods
 #
