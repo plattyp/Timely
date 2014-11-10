@@ -24,11 +24,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             myDict = NSDictionary(contentsOfFile: path)!
         }
         
-        if myDict.count == 0 {
-            Parse.setApplicationId(String(myDict.objectForKey("ParseAppID") as NSString), clientKey: String(myDict.objectForKey("ParseClientKey") as NSString))
+        if myDict.count > 0 {
+            Parse.setApplicationId(String(myDict.objectForKey("ParseAppID")! as NSString), clientKey: String(myDict.objectForKey("ParseClientKey")! as NSString))
+        } else {
+            println("Not Set")
         }
         
+        // Check to see if this is an iOS 8 device.
+        if floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber10_8 {
+            // Register for push in iOS 8
+            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Sound | UIUserNotificationType.Badge, categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+        } else {
+            // Register for push in iOS 7
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(UIRemoteNotificationType.Badge | UIRemoteNotificationType.Sound | UIRemoteNotificationType.Alert)
+        }
+        
+        //Create a user account for the application
+        PFUser.enableAutomaticUser()
+        
         return true
+    }
+    
+    func application( application: UIApplication!, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData! ) {
+        // Store the deviceToken in the current installation and save it to Parse.
+        let currentInstallation:PFInstallation = PFInstallation.currentInstallation()
+        currentInstallation.setDeviceTokenFromData(deviceToken)
+        currentInstallation.setObject(PFUser.currentUser(), forKey: "owner")
+        currentInstallation.saveInBackgroundWithBlock{(success: Bool!, error: NSError!) -> Void in
+            if (success == true) {
+                println("got device id! \(deviceToken)")
+            } else {
+                NSLog("%@", error)
+            }
+        }
+        
+    }
+    
+    func application(application: UIApplication!, didReceiveRemoteNotification userInfo: [NSObject : NSObject]!) {
+        //Let parse handle the push notifications
+        PFPush.handlePush(userInfo)
+    }
+    
+    func application(application: UIApplication!, didReceiveLocalNotification notification: UILocalNotification!) {
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -39,6 +79,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        //Stop timer
+        timer.invalidate()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

@@ -57,6 +57,9 @@ class TimerTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var myCell:TimerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as TimerTableViewCell
         
+        // Set activeTimers = 0
+        //activeTimers = 0
+        
         // Get the LogItem for this index
         let timerItem = timers[indexPath.row]
         
@@ -92,9 +95,12 @@ class TimerTableViewController: UITableViewController {
             
             myCell.countdownLabel.text = "\(displayhours):\(displaymins):\(displaysecs)"
             
+            println("Seconds remaining: \(seconds)")
             //Reset to not active if the seconds go to 0
-            if seconds == 0 {
+            if seconds == 1 {
                 timerItem.startedIndicator = false
+                //Kick off an alert
+                //alertUserAboutTimer()
             }
             
             activeTimers++
@@ -182,6 +188,16 @@ class TimerTableViewController: UITableViewController {
         
         //At this point the timers will be refreshed from the newly saved data
         fetchTimers()
+        
+        //Declare an interval that is the amount of seconds needed for that timer
+        var secondsToBeAdded:NSTimeInterval = NSTimeInterval()
+        secondsToBeAdded.advancedBy(Double(timerItem.timerSeconds))
+        
+        //Get the date in which the timer should show the notification (Seconds plus the time started)
+        var fireDate = timerItem.timeStarted.dateByAddingTimeInterval(secondsToBeAdded)
+        
+        //Create the local notification
+        scheduleLocalAlert(fireDate)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -248,5 +264,40 @@ class TimerTableViewController: UITableViewController {
     func stopTimer() {
         timer.invalidate()
         println("Timer Stopped")
+    }
+    
+    func alertUserAboutTimer() {
+        var pushQuery:PFQuery = PFInstallation.query()
+        var userReceivingPush = PFUser.currentUser()
+        
+        pushQuery.whereKey("owner", equalTo:userReceivingPush)
+        
+        var alert:String = "Your timer has gone off!"
+        var data = ["alert":alert,"sound":"default","badge":"Increment"]
+
+        var push:PFPush = PFPush()
+        push.setQuery(pushQuery)
+        push.setData(data)
+        push.sendPushInBackgroundWithBlock({(success: Bool!, error: NSError!) -> Void in
+            
+            if success == true {
+                print("sent")
+            } else {
+                println(error)
+            }
+        })
+    }
+    
+    func scheduleLocalAlert(dateFinished: NSDate) {
+        var alert:UILocalNotification = UILocalNotification()
+        
+        alert.fireDate = dateFinished
+        alert.timeZone = NSTimeZone.defaultTimeZone()
+        alert.repeatInterval = NSCalendarUnit.allZeros
+        alert.alertAction = "Ok!"
+        alert.soundName = UILocalNotificationDefaultSoundName
+        alert.alertBody = "Your timer has gone off :)"
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(alert)
     }
 }
