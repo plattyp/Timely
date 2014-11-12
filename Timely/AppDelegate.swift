@@ -8,12 +8,16 @@
 
 import UIKit
 import CoreData
+import AVFoundation
+import AudioToolbox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    /* Define audio player to be modified below */
+    var audioPlayer = AVAudioPlayer()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -68,7 +72,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication!, didReceiveLocalNotification notification: UILocalNotification!) {
+        self.doAlert(notification)
+    }
+
+    func doAlert(n:UILocalNotification) {
+        /* Create alert */
+        let alert = UIAlertController(title: "Times Up!",
+            message: "\(n.alertBody!)",
+            preferredStyle: .Alert)
         
+        /* Create action to handle OK dismissing */
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) in
+            self.stopLoopingAudio()
+        }
+        
+        /* Add action to handle dismissing the alert */
+        alert.addAction(okAction)
+        
+        /* Kick off the looping of Audio */
+        doLoopingAudio()
+        
+        /* Kick off a vibration */
+        doLoopingVibrate()
+        
+        /* Expose the alert to the window so that a user can cancel out of it */
+        self.window!.rootViewController!.presentViewController(alert,
+            animated: true, completion: nil)
+    }
+    
+    func doLoopingAudio() {
+        var sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("DoorBell", ofType: "wav")!)
+        audioPlayer = AVAudioPlayer(contentsOfURL: sound, error:nil)
+        audioPlayer.prepareToPlay()
+        audioPlayer.numberOfLoops = -1
+        audioPlayer.play()
+    }
+    
+    func doLoopingVibrate() {
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    func stopLoopingAudio() {
+        audioPlayer.stop()
     }
 
     func applicationWillResignActive(application: UIApplication) {

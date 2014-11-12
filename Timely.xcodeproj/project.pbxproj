@@ -32,6 +32,7 @@
 		82F007401A0B90F700AF77CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F0073F1A0B90F700AF77CE /* SystemConfiguration.framework */; };
 		82F007451A0B920500AF77CE /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F007441A0B920500AF77CE /* ParseFacebookUtils.framework */; };
 		82F007471A0DC75900AF77CE /* properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82F007461A0DC75900AF77CE /* properties.plist */; };
+		82F007491A13858100AF77CE /* DoorBell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 82F007481A13858100AF77CE /* DoorBell.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		82F007411A0B917A00AF77CE /* Timely-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timely-Bridging-Header.h"; sourceTree = "<group>"; };
 		82F007441A0B920500AF77CE /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		82F007461A0DC75900AF77CE /* properties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = properties.plist; sourceTree = "<group>"; };
+		82F007481A13858100AF77CE /* DoorBell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = DoorBell.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		820AE4B319FF9AE4002E9809 /* Timely */ = {
 			isa = PBXGroup;
 			children = (
+				82F007481A13858100AF77CE /* DoorBell.wav */,
 				820AE4B619FF9AE4002E9809 /* AppDelegate.swift */,
 				820AE4BB19FF9AE4002E9809 /* ViewController.swift */,
 				820AE4BD19FF9AE4002E9809 /* Main.storyboard */,
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				820AE4BF19FF9AE4002E9809 /* Main.storyboard in Resources */,
+				82F007491A13858100AF77CE /* DoorBell.wav in Resources */,
 				820AE4C419FF9AE4002E9809 /* LaunchScreen.xib in Resources */,
 				820AE4C119FF9AE4002E9809 /* Images.xcassets in Resources */,
 				82F007471A0DC75900AF77CE /* properties.plist in Resources */,
