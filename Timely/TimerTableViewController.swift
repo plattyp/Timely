@@ -136,23 +136,52 @@ class TimerTableViewController: UITableViewController {
         return true
     }
     
+    //Define the actions that can happen when sliding left on a table
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+        
+        var editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit", handler: {
+            (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
+            println("Triggered edit action \(action) atIndexPath: \(indexPath)")
+            return
+        })
+        
+        editAction.backgroundColor = UIColor.grayColor()
+        
+        var endAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "End", handler: {
+            (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
+            println("Triggered end action \(action) atIndexPath: \(indexPath)")
+            self.endTimer(indexPath)
+            return
+        })
+        
+        endAction.backgroundColor = UIColor.orangeColor()
+        
+        var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler: {
+            (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
+            println("Triggered delete action \(action) atIndexPath: \(indexPath)")
+            self.deleteTimer(indexPath)
+            return
+        })
+        
+        deleteAction.backgroundColor = UIColor.redColor()
+        
+        //startTimer()
+        
+        return [deleteAction, endAction, editAction]
+    }
+    
+    override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+        stopTimer()
+    }
+    
+    //After any edits have/haven't been made, start the timer back up
+    override func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+        startTimer()
+    }
+    
+    //Needed to display the editing buttons for the table
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if(editingStyle == .Delete ) {
-            // Find the LogItem object the user is trying to delete
-            let timerToDelete = timers[indexPath.row]
-            
-            // Delete it from the managedObjectContext
-            managedObjectContext?.deleteObject(timerToDelete)
-            
-            // Refresh the table view to indicate that it's deleted
-            self.fetchTimers()
-            
-            // Tell the table view to animate out that row
-            [timerTable .deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)]
-            
-            // Save changes
-            save()
-        }
+        return
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -258,15 +287,48 @@ class TimerTableViewController: UITableViewController {
     
     //Used to create a timer
     func startTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "runCounter", userInfo: nil, repeats: true)
-        timerSet = true
-        println("Timer Started")
+        if timer.valid == false {
+            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "runCounter", userInfo: nil, repeats: true)
+            timerSet = true
+            println("Timer Started")
+        }
     }
     
     //Used to stop a timer
     func stopTimer() {
         timer.invalidate()
+        timerSet = false
         println("Timer Stopped")
+    }
+    
+    //Function used to delete the timer from the table and reset the local notifications
+    func deleteTimer(indexPath: NSIndexPath) {
+        // Find the LogItem object the user is trying to delete
+        let timerToDelete = self.timers[indexPath.row]
+        
+        // Delete it from the managedObjectContext
+        managedObjectContext?.deleteObject(timerToDelete)
+        
+        // Refresh the table view to indicate that it's deleted
+        fetchTimers()
+        
+        // Tell the table view to animate out that row
+        [timerTable .deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)]
+        
+        // Save changes
+        save()
+    }
+    
+    func endTimer(indexPath: NSIndexPath) {
+        let timerToEnd = self.timers[indexPath.row]
+        
+        //Update in persistent storage
+        var managedObject = timerToEnd
+        managedObject.setValue(false, forKey: "startedIndicator")
+        save()
+        
+        //Reload timer values into array
+        fetchTimers()
     }
     
     //Used to schedule an alert to show up when the timer runs out
@@ -282,5 +344,9 @@ class TimerTableViewController: UITableViewController {
         println("Created timer for \(dateFinished)")
         
         UIApplication.sharedApplication().scheduleLocalNotification(alert)
+    }
+    
+    func deleteScheduledAlert(uniqueIdentifier: Int) {
+        
     }
 }
