@@ -62,9 +62,6 @@ class TimerTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var myCell:TimerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as TimerTableViewCell
         
-        // Set activeTimers = 0
-        //activeTimers = 0
-        
         // Get the LogItem for this index
         let timerItem = timers[indexPath.row]
         
@@ -139,9 +136,13 @@ class TimerTableViewController: UITableViewController {
     //Define the actions that can happen when sliding left on a table
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
         
+        let timerItem = timers[indexPath.row]
+        
         var editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit", handler: {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
             println("Triggered edit action \(action) atIndexPath: \(indexPath)")
+            //Cancel alert with identifier
+            self.cancelScheduledAlert(timerItem.objectID.URIRepresentation())
             return
         })
         
@@ -164,8 +165,6 @@ class TimerTableViewController: UITableViewController {
         })
         
         deleteAction.backgroundColor = UIColor.redColor()
-        
-        //startTimer()
         
         return [deleteAction, endAction, editAction]
     }
@@ -228,7 +227,7 @@ class TimerTableViewController: UITableViewController {
         var fireDate = startTime.dateByAddingTimeInterval(Double(timerItem.timerSeconds))
         
         //Create the local notification
-        scheduleLocalAlert(fireDate,timerName: timerItem.timerName)
+        scheduleLocalAlert(fireDate,timerName: timerItem.timerName, timerID: timerItem.objectID.URIRepresentation())
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -332,7 +331,7 @@ class TimerTableViewController: UITableViewController {
     }
     
     //Used to schedule an alert to show up when the timer runs out
-    func scheduleLocalAlert(dateFinished: NSDate, timerName: String) {
+    func scheduleLocalAlert(dateFinished: NSDate, timerName: String, timerID: NSURL) {
         var alert:UILocalNotification = UILocalNotification()
         
         alert.fireDate = dateFinished
@@ -341,12 +340,23 @@ class TimerTableViewController: UITableViewController {
         alert.soundName = UILocalNotificationDefaultSoundName
         alert.alertBody = "Your \"\(timerName)\" timer has gone off"
         
+        //For identification of the local notification
+        alert.userInfo = ["URI":timerID.absoluteString!]
+        
         println("Created timer for \(dateFinished)")
         
         UIApplication.sharedApplication().scheduleLocalNotification(alert)
     }
     
-    func deleteScheduledAlert(uniqueIdentifier: Int) {
+    func cancelScheduledAlert(timerID: NSURL) {
+        var notificationToCancel:UILocalNotification = UILocalNotification()
+    
+        var scheduledNotifications = UIApplication.sharedApplication().scheduledLocalNotifications.generate()
         
+        for notification in enumerate(scheduledNotifications) {
+            //if timerID.absoluteString! == String(notification.element.userInfo["URI"]) {
+            //    println("found it!")
+            //}
+        }
     }
 }
