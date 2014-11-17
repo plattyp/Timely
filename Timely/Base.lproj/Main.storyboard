@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-112" y="959"/>
         </scene>
-        <!--Timers-->
+        <!--Timely-->
         <scene sceneID="tDe-h8-bmH">
             <objects>
                 <tableViewController storyboardIdentifier="TimerTableList" id="Mml-m1-q0x" customClass="TimerTableViewController" customModule="Timely" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,10 +77,10 @@
                             <outlet property="delegate" destination="Mml-m1-q0x" id="hii-KN-syH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Timers" id="88f-RJ-dta">
+                    <navigationItem key="navigationItem" title="Timely" id="88f-RJ-dta">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cJX-dk-4Aa">
                             <connections>
-                                <segue destination="Z5R-Hp-VLV" kind="show" id="RtS-Lc-9xm"/>
+                                <segue destination="Z5R-Hp-VLV" kind="show" identifier="editTimerSegue" id="RtS-Lc-9xm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -96,7 +96,7 @@
         <!--Add Timer-->
         <scene sceneID="dpQ-H4-yt3">
             <objects>
-                <viewController title="Add Timer" id="Z5R-Hp-VLV" customClass="AddTimerViewController" customModule="Timely" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Timer" id="Z5R-Hp-VLV" customClass="EditTimerViewController" customModule="Timely" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="J2h-sW-irv"/>
                         <viewControllerLayoutGuide type="bottom" id="M9n-ub-U8B"/>
@@ -126,8 +126,8 @@
                                     <!--2014-10-28 06:01:01 +0000-->
                                 </date>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kw-zO-SPX">
-                                <rect key="frame" x="16" y="196" width="44" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer Length" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kw-zO-SPX">
+                                <rect key="frame" x="16" y="196" width="101" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -158,6 +158,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="editTimerButton" destination="69p-4c-sKj" id="LJQ-k9-HU3"/>
                         <outlet property="timerInput" destination="VVU-Wt-eTg" id="3Xz-wo-ytr"/>
                         <outlet property="titleInput" destination="68G-cb-vE2" id="HrZ-WU-dHK"/>
                         <segue destination="Mml-m1-q0x" kind="show" identifier="backToTimerView" id="bSx-2M-2tS"/>
@@ -165,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dq8-8b-pvd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="234"/>
+            <point key="canvasLocation" x="1140" y="234"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Lge-g4-xra">
@@ -186,6 +187,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="FSM-Jr-R7i"/>
+        <segue reference="bSx-2M-2tS"/>
     </inferredMetricsTieBreakers>
 </document>

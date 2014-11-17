@@ -23,6 +23,11 @@ class TimerTableViewController: UITableViewController {
     var timers  = [TimersDefined]()
     var activeTimers = 0
     
+    //Variables to store selected information about a given timer
+    var timerSelectedName = String()
+    var timerEditing = false
+    var timerInterval = NSTimeInterval()
+    
     lazy var managedObjectContext : NSManagedObjectContext? = {
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         if let managedObjectContext = appDelegate.managedObjectContext {
@@ -82,22 +87,14 @@ class TimerTableViewController: UITableViewController {
         if timerItem.startedIndicator == 1 {
             myCell.accessoryType = UITableViewCellAccessoryType.None
             
-            //Display New Counter
+            //Calculate difference in time
             var currentDate = NSDate()
             var startedDate = timerItem.timeStarted
             var seconds = Int(timerItem.timerSeconds) - Int(round(currentDate.timeIntervalSinceDate(startedDate)))
-            var hours   = seconds / 3600
-            var mins    = (seconds % 3600) / 60
-            var secs    = seconds % 60
+
+            //Set the label to display the newly updated time
+            myCell.countdownLabel.text = displayTicker(seconds)
             
-            //Format Approriately
-            var displayhours:String = trimTime("\(hours)")
-            var displaymins:String  = trimTime("\(mins)")
-            var displaysecs:String  = trimTime("\(secs)")
-            
-            myCell.countdownLabel.text = "\(displayhours):\(displaymins):\(displaysecs)"
-            
-            println("Seconds remaining: \(seconds)")
             //Reset to not active if the seconds go to 0
             if seconds == 1 {
                 timerItem.startedIndicator = false
@@ -141,8 +138,18 @@ class TimerTableViewController: UITableViewController {
         var editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit", handler: {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
             println("Triggered edit action \(action) atIndexPath: \(indexPath)")
-            //Cancel alert with identifier
-            self.cancelScheduledAlert(timerItem.objectID.URIRepresentation())
+            
+            if timerItem.startedIndicator == 1 {
+                self.alertUser("Timer Running", message: "A timer cannot be edited while running. Please end it and try again.")
+            } else {
+                //Set variables to be passed to Segue
+                self.timerSelectedName = timerItem.timerName
+                self.timerInterval = timerItem.timerSeconds as NSTimeInterval
+                self.timerEditing  = true
+                
+                //Perform the segue
+                self.performSegueWithIdentifier("editTimerSegue", sender: self)
+            }
             return
         })
         
@@ -152,6 +159,12 @@ class TimerTableViewController: UITableViewController {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
             println("Triggered end action \(action) atIndexPath: \(indexPath)")
             self.endTimer(indexPath)
+    
+            //Create an array containing the indexPath
+            var array:Array = [indexPath]
+            //Refresh the row with animation
+            self.timerTable.reloadRowsAtIndexPaths(array, withRowAnimation: UITableViewRowAnimation.Right)
+            
             return
         })
         
@@ -160,13 +173,23 @@ class TimerTableViewController: UITableViewController {
         var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler: {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
             println("Triggered delete action \(action) atIndexPath: \(indexPath)")
+            
+            //Delete the timer
             self.deleteTimer(indexPath)
+            
+            //Cancel any scheduled alerts with identifier
+            self.cancelScheduledAlert(timerItem.objectID.URIRepresentation())
+            
             return
         })
         
         deleteAction.backgroundColor = UIColor.redColor()
         
-        return [deleteAction, endAction, editAction]
+        if timerItem.startedIndicator == 1 {
+            return [deleteAction, endAction]
+        } else {
+            return [deleteAction, editAction]
+        }
     }
     
     override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
@@ -195,17 +218,8 @@ class TimerTableViewController: UITableViewController {
         // Get the LogItem for this index
         let timerItem = timers[indexPath.row]
         
-        var seconds = Int(timerItem.timerSeconds)
-        var hours   = seconds / 3600
-        var mins    = (seconds % 3600) / 60
-        var secs    = seconds % 60
-        
-        //Format Approriately
-        var displayhours:String = trimTime("\(hours)")
-        var displaymins:String  = trimTime("\(mins)")
-        var displaysecs:String  = trimTime("\(secs)")
-        
-        cell.countdownLabel.text = "\(displayhours):\(displaymins):\(displaysecs)"
+        //Set the label to display the newly updated time
+        cell.countdownLabel.text = displayTicker(Int(timerItem.timerSeconds))
         
         //Start the timer by setting the array index to true
         timerItem.startedIndicator = true
@@ -231,7 +245,7 @@ class TimerTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        //Used to hide navigation once the seque returns after a value has been added
+        //Used to hide navigation once the segue returns after a value has been added
         if somethingAdded {
             self.navigationItem.hidesBackButton = true
         }
@@ -348,15 +362,82 @@ class TimerTableViewController: UITableViewController {
         UIApplication.sharedApplication().scheduleLocalNotification(alert)
     }
     
+    //Used to cancel scheduled alerts
     func cancelScheduledAlert(timerID: NSURL) {
         var notificationToCancel:UILocalNotification = UILocalNotification()
     
         var scheduledNotifications = UIApplication.sharedApplication().scheduledLocalNotifications.generate()
         
+        //Loop through all scheduled notifications until the URI matches the one that is trying to be stopped
         for notification in enumerate(scheduledNotifications) {
-            //if timerID.absoluteString! == String(notification.element.userInfo["URI"]) {
-            //    println("found it!")
-            //}
+            if let uri = notification.element.userInfo! {
+                if timerID.absoluteString! == uri["URI"]! as NSString {
+                    notificationToCancel = notification.element as UILocalNotification
+                }
+            }
+        }
+        
+        //Cancel the notification
+        UIApplication.sharedApplication().cancelLocalNotification(notificationToCancel)
+    }
+    
+    func displayTicker(secondsDefined: Int) -> String{
+        var seconds = secondsDefined
+        var hours   = seconds / 3600
+        var mins    = (seconds % 3600) / 60
+        var secs    = seconds % 60
+        
+        //Format Approriately
+        var displayhours:String = trimTime("\(hours)")
+        var displaymins:String  = trimTime("\(mins)")
+        var displaysecs:String  = trimTime("\(secs)")
+        
+        var displaytext = "\(displayhours):\(displaymins):\(displaysecs)"
+        
+        return displaytext
+    }
+    
+    //Standard Alert
+    func alertUser(tile: String, message: String) {
+        /* Create alert */
+        let alert = UIAlertController(title: title,
+            message: message,
+            preferredStyle: .Alert)
+        
+        /* Create action to handle OK dismissing */
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        
+        /* Add action to handle dismissing the alert */
+        alert.addAction(okAction)
+        
+        /* Set off Alert */
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //Passes information about the timer being edited/added
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editTimerSegue" {
+            var editTimerView = segue.destinationViewController as EditTimerViewController
+        
+            //Editing action
+            if timerEditing == true {
+                //Set passing information
+                editTimerView.timerName = timerSelectedName
+                editTimerView.timerTime = timerInterval
+                editTimerView.timerEditing = true
+            }
+            
+            //Adding action
+            if timerEditing == false {
+                //Set passing information
+                editTimerView.timerName = ""
+                editTimerView.timerTime = 0
+                editTimerView.timerEditing = false
+            }
+            
+            //Reset this for future segues
+            timerEditing = false
+
         }
     }
 }

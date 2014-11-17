@@ -16,7 +16,7 @@
 		820AE4D019FF9AE4002E9809 /* TimelyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4CF19FF9AE4002E9809 /* TimelyTests.swift */; };
 		820AE4DA19FF9C19002E9809 /* TimerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */; };
 		820AE4DC19FF9DC6002E9809 /* TimerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */; };
-		820AE4DE19FFADE5002E9809 /* AddTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4DD19FFADE5002E9809 /* AddTimerViewController.swift */; };
+		822A96891A1961CF008033C9 /* EditTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A96881A1961CF008033C9 /* EditTimerViewController.swift */; };
 		82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F007231A093BCB00AF77CE /* TimersDefined.swift */; };
 		82F0072A1A0B8F8300AF77CE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F007271A0B8F5800AF77CE /* CoreLocation.framework */; };
 		82F0072D1A0B90A100AF77CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F0072B1A0B90A100AF77CE /* Bolts.framework */; };
@@ -59,7 +59,7 @@
 		820AE4CF19FF9AE4002E9809 /* TimelyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelyTests.swift; sourceTree = "<group>"; };
 		820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerTableViewController.swift; sourceTree = "<group>"; };
 		820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerTableViewCell.swift; sourceTree = "<group>"; };
-		820AE4DD19FFADE5002E9809 /* AddTimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTimerViewController.swift; sourceTree = "<group>"; };
+		822A96881A1961CF008033C9 /* EditTimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTimerViewController.swift; sourceTree = "<group>"; };
 		82F007231A093BCB00AF77CE /* TimersDefined.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimersDefined.swift; sourceTree = "<group>"; };
 		82F007271A0B8F5800AF77CE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		82F0072B1A0B90A100AF77CE /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 				820AE4B619FF9AE4002E9809 /* AppDelegate.swift */,
 				820AE4BB19FF9AE4002E9809 /* ViewController.swift */,
 				820AE4BD19FF9AE4002E9809 /* Main.storyboard */,
-				820AE4DD19FFADE5002E9809 /* AddTimerViewController.swift */,
+				822A96881A1961CF008033C9 /* EditTimerViewController.swift */,
 				820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */,
 				820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */,
 				820AE4C019FF9AE4002E9809 /* Images.xcassets */,
@@ -306,10 +306,10 @@
 			files = (
 				820AE4BC19FF9AE4002E9809 /* ViewController.swift in Sources */,
 				820AE4DA19FF9C19002E9809 /* TimerTableViewController.swift in Sources */,
-				820AE4DE19FFADE5002E9809 /* AddTimerViewController.swift in Sources */,
 				820AE4DC19FF9DC6002E9809 /* TimerTableViewCell.swift in Sources */,
 				82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */,
 				820AE4B719FF9AE4002E9809 /* AppDelegate.swift in Sources */,
+				822A96891A1961CF008033C9 /* EditTimerViewController.swift in Sources */,
 				820AE4BA19FF9AE4002E9809 /* Timely.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
