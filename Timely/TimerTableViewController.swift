@@ -20,14 +20,15 @@ var timerSet = false
 
 class TimerTableViewController: UITableViewController {
 
+    //Variables needed to run actions within the Class
     var timers  = [TimersDefined]()
     var activeTimers = 0
     
-    //Variables to store selected information about a given timer
-    var timerSelectedName = String()
+    //Variables to store selected information about a given timer for Segues
+    var timerSelectedRow = 0
     var timerEditing = false
-    var timerInterval = NSTimeInterval()
     
+    //Needed to create a ManagedObjectContext so that timers can be modified later
     lazy var managedObjectContext : NSManagedObjectContext? = {
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         if let managedObjectContext = appDelegate.managedObjectContext {
@@ -38,7 +39,13 @@ class TimerTableViewController: UITableViewController {
         }
     }()
 
+    //Outlet for the UITAbleView so that it can be manipulated below
     @IBOutlet var timerTable: UITableView!
+
+    
+    //
+    // All standard methods for controlling the view
+    //
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,15 +54,28 @@ class TimerTableViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"initialize", name: UIApplicationWillEnterForegroundNotification,object: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        //Used to hide navigation once the segue returns after a value has been added
+        if somethingAdded {
+            self.navigationItem.hidesBackButton = true
+        }
+        somethingAdded = false
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+    
     func initialize() {
         startTimer()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-
-    }
-
+    
+    //
+    // All methods for controlling the table
+    //
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -143,8 +163,7 @@ class TimerTableViewController: UITableViewController {
                 self.alertUser("Timer Running", message: "A timer cannot be edited while running. Please end it and try again.")
             } else {
                 //Set variables to be passed to Segue
-                self.timerSelectedName = timerItem.timerName
-                self.timerInterval = timerItem.timerSeconds as NSTimeInterval
+                self.timerSelectedRow = indexPath.row
                 self.timerEditing  = true
                 
                 //Perform the segue
@@ -158,7 +177,12 @@ class TimerTableViewController: UITableViewController {
         var endAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "End", handler: {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
             println("Triggered end action \(action) atIndexPath: \(indexPath)")
+            
+            //Set the timer to end within CoreData
             self.endTimer(indexPath)
+            
+            //Cancel any scheduled alerts with identifier
+            self.cancelScheduledAlert(timerItem.objectID.URIRepresentation())
     
             //Create an array containing the indexPath
             var array:Array = [indexPath]
@@ -244,33 +268,15 @@ class TimerTableViewController: UITableViewController {
         scheduleLocalAlert(fireDate,timerName: timerItem.timerName, timerID: timerItem.objectID.URIRepresentation())
     }
     
-    override func viewWillAppear(animated: Bool) {
-        //Used to hide navigation once the segue returns after a value has been added
-        if somethingAdded {
-            self.navigationItem.hidesBackButton = true
-        }
-        somethingAdded = false
-    }
-    
     //Used by the timer to refresh the table values
     func runCounter() {
         timerTable.reloadData()
     }
-
-    //For formatting the numbers derived from seconds. This is leveraged when displaying the running clock.
-    func trimTime(timeValue: String) -> String {
-        
-        var display = String()
-        
-        //For printing numbers with an additional zero if they only have one value (i.e. 7 becomes 07)
-        if countElements("\(timeValue)") == 1 {
-            display = "0\(timeValue)"
-        } else {
-            display = "\(timeValue)"
-        }
-        
-        return display
-    }
+    
+    
+    //
+    // All methods for controlling interaction with the NSTimer Object
+    //
 
     //Used to retrieve the latest from TimersDefined and Insert the results into the timers array
     func fetchTimers() -> Bool {
@@ -288,14 +294,6 @@ class TimerTableViewController: UITableViewController {
             timers = fetchResults
         }
         return true
-    }
-    
-    //Used to save to Managed Object Context (Updating values)
-    func save() {
-        var error : NSError?
-        if(managedObjectContext!.save(&error) ) {
-            println(error?.localizedDescription)
-        }
     }
     
     //Used to create a timer
@@ -344,6 +342,11 @@ class TimerTableViewController: UITableViewController {
         fetchTimers()
     }
     
+    
+    //
+    // All methods for scheduling/showing/cancelling alerts
+    //
+    
     //Used to schedule an alert to show up when the timer runs out
     func scheduleLocalAlert(dateFinished: NSDate, timerName: String, timerID: NSURL) {
         var alert:UILocalNotification = UILocalNotification()
@@ -353,6 +356,7 @@ class TimerTableViewController: UITableViewController {
         alert.repeatInterval = NSCalendarUnit.allZeros
         alert.soundName = UILocalNotificationDefaultSoundName
         alert.alertBody = "Your \"\(timerName)\" timer has gone off"
+        alert.applicationIconBadgeNumber++
         
         //For identification of the local notification
         alert.userInfo = ["URI":timerID.absoluteString!]
@@ -381,22 +385,6 @@ class TimerTableViewController: UITableViewController {
         UIApplication.sharedApplication().cancelLocalNotification(notificationToCancel)
     }
     
-    func displayTicker(secondsDefined: Int) -> String{
-        var seconds = secondsDefined
-        var hours   = seconds / 3600
-        var mins    = (seconds % 3600) / 60
-        var secs    = seconds % 60
-        
-        //Format Approriately
-        var displayhours:String = trimTime("\(hours)")
-        var displaymins:String  = trimTime("\(mins)")
-        var displaysecs:String  = trimTime("\(secs)")
-        
-        var displaytext = "\(displayhours):\(displaymins):\(displaysecs)"
-        
-        return displaytext
-    }
-    
     //Standard Alert
     func alertUser(tile: String, message: String) {
         /* Create alert */
@@ -414,6 +402,63 @@ class TimerTableViewController: UITableViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    
+    
+    //
+    // All methods for formatting the time values effectively for presentation
+    //
+    
+    //For formatting the numbers derived from seconds. This is leveraged when displaying the running clock.
+    func trimTime(timeValue: String) -> String {
+        
+        var display = String()
+        
+        //For printing numbers with an additional zero if they only have one value (i.e. 7 becomes 07)
+        if countElements("\(timeValue)") == 1 {
+            display = "0\(timeValue)"
+        } else {
+            display = "\(timeValue)"
+        }
+        
+        return display
+    }
+    
+    func displayTicker(secondsDefined: Int) -> String{
+        var seconds = secondsDefined
+        var hours   = seconds / 3600
+        var mins    = (seconds % 3600) / 60
+        var secs    = seconds % 60
+        
+        //Format Approriately
+        var displayhours:String = trimTime("\(hours)")
+        var displaymins:String  = trimTime("\(mins)")
+        var displaysecs:String  = trimTime("\(secs)")
+        
+        var displaytext = "\(displayhours):\(displaymins):\(displaysecs)"
+        
+        return displaytext
+    }
+    
+    
+    
+    //
+    // All methods to interact with NSManagedObjects (TimersDefined)
+    //
+    
+    //Used to save to Managed Object Context (Updating values)
+    func save() {
+        var error : NSError?
+        if(managedObjectContext!.save(&error) ) {
+            println(error?.localizedDescription)
+        }
+    }
+
+    
+    
+    //
+    // All methods to interact with Segues
+    //
+    
     //Passes information about the timer being edited/added
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editTimerSegue" {
@@ -421,10 +466,13 @@ class TimerTableViewController: UITableViewController {
         
             //Editing action
             if timerEditing == true {
-                //Set passing information
-                editTimerView.timerName = timerSelectedName
-                editTimerView.timerTime = timerInterval
+                
+                var timerItem:TimersDefined = timers[timerSelectedRow] as TimersDefined
+                
+                editTimerView.timerName = timerItem.valueForKey("timerName") as String
+                editTimerView.timerTime = timerItem.valueForKey("timerSeconds") as Int
                 editTimerView.timerEditing = true
+                
             }
             
             //Adding action
