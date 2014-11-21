@@ -26,17 +26,29 @@ class EditTimerViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var editTimerButton: UIButton!
     
     //For passing variable values through the Segue
-    var timerName = String()
-    var timerTime = Int()
+    var timerObjectID  = NSManagedObjectID()
     var timerEditing = false
+    var timers  = [TimersDefined]()
     
     @IBAction func addTimerButton(sender: AnyObject) {
-        //Create instance
-        TimersDefined.createInManagedObjectContext(self.managedObjectContext!, name: titleInput.text, seconds: Int(timerInput.countDownDuration))
         
-        //Save
-        save()
-        
+        if timerEditing == true {
+            //Leverage existing instance that needs to be modified
+            var managedObject = timers[0]
+            
+            //Update in persistent storage
+            managedObject.setValue(titleInput.text, forKey: "timerName")
+            managedObject.setValue(timerInput.countDownDuration, forKey: "timerSeconds")
+            
+            //Save
+            save()
+        } else {
+            //Create instance
+            TimersDefined.createInManagedObjectContext(self.managedObjectContext!, name: titleInput.text, seconds: Int(timerInput.countDownDuration))
+            
+            //Save
+            save()
+        }
         //Tells the tableView to hide navigation
         somethingAdded = true
         
@@ -56,14 +68,19 @@ class EditTimerViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.titleInput.delegate = self
     
-        if timerName != "" && timerEditing {
-            titleInput.text = timerName
-            timerInput.countDownDuration = NSTimeInterval(timerTime)
+        if timerEditing == true {
+            //Search for the object being edited
+            fetchTimers()
+            
+            titleInput.text = timers[0].timerName
+            timerInput.countDownDuration = NSTimeInterval(timers[0].timerSeconds)
             editTimerButton.setTitle("Update Timer", forState: .Normal)
             self.title = "Edit Timer"
         }
         
         if timerEditing == false {
+            titleInput.text == ""
+            timerInput.countDownDuration = NSTimeInterval(0)
             editTimerButton.setTitle("Create Timer", forState: .Normal)
             self.title = "Add Timer"
         }
@@ -72,6 +89,18 @@ class EditTimerViewController: UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //Used to retrieve the latest from TimersDefined and Insert the results into the timers array
+    func fetchTimers() -> Bool {
+        let fetchRequest = NSFetchRequest(entityName: "TimersDefined")
+        
+        fetchRequest.predicate = NSPredicate(format: "self == %@", timerObjectID)
+        
+        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [TimersDefined] {
+            timers = fetchResults
+        }
+        return true
     }
     
     func save() {

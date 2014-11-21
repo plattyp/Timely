@@ -466,20 +466,14 @@ class TimerTableViewController: UITableViewController {
         
             //Editing action
             if timerEditing == true {
-                
                 var timerItem:TimersDefined = timers[timerSelectedRow] as TimersDefined
-                
-                editTimerView.timerName = timerItem.valueForKey("timerName") as String
-                editTimerView.timerTime = timerItem.valueForKey("timerSeconds") as Int
+                editTimerView.timerObjectID  = timerItem.objectID
                 editTimerView.timerEditing = true
-                
             }
             
             //Adding action
             if timerEditing == false {
                 //Set passing information
-                editTimerView.timerName = ""
-                editTimerView.timerTime = 0
                 editTimerView.timerEditing = false
             }
             
