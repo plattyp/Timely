@@ -17,6 +17,8 @@
 		820AE4DA19FF9C19002E9809 /* TimerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */; };
 		820AE4DC19FF9DC6002E9809 /* TimerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */; };
 		822A96891A1961CF008033C9 /* EditTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A96881A1961CF008033C9 /* EditTimerViewController.swift */; };
+		82BEC0F31A213E8300AD963C /* CurvedArrow3.png in Resources */ = {isa = PBXBuildFile; fileRef = 82BEC0F21A213E8300AD963C /* CurvedArrow3.png */; };
+		82BEC0F51A2156EA00AD963C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BEC0F41A2156EA00AD963C /* NavigationController.swift */; };
 		82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F007231A093BCB00AF77CE /* TimersDefined.swift */; };
 		82F0072A1A0B8F8300AF77CE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F007271A0B8F5800AF77CE /* CoreLocation.framework */; };
 		82F0072D1A0B90A100AF77CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F0072B1A0B90A100AF77CE /* Bolts.framework */; };
@@ -60,6 +62,8 @@
 		820AE4D919FF9C19002E9809 /* TimerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerTableViewController.swift; sourceTree = "<group>"; };
 		820AE4DB19FF9DC6002E9809 /* TimerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerTableViewCell.swift; sourceTree = "<group>"; };
 		822A96881A1961CF008033C9 /* EditTimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTimerViewController.swift; sourceTree = "<group>"; };
+		82BEC0F21A213E8300AD963C /* CurvedArrow3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CurvedArrow3.png; sourceTree = "<group>"; };
+		82BEC0F41A2156EA00AD963C /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		82F007231A093BCB00AF77CE /* TimersDefined.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimersDefined.swift; sourceTree = "<group>"; };
 		82F007271A0B8F5800AF77CE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		82F0072B1A0B90A100AF77CE /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 		820AE4B319FF9AE4002E9809 /* Timely */ = {
 			isa = PBXGroup;
 			children = (
+				82BEC0F21A213E8300AD963C /* CurvedArrow3.png */,
 				82F007481A13858100AF77CE /* DoorBell.wav */,
 				820AE4B619FF9AE4002E9809 /* AppDelegate.swift */,
 				820AE4BB19FF9AE4002E9809 /* ViewController.swift */,
@@ -146,6 +151,7 @@
 				820AE4B419FF9AE4002E9809 /* Supporting Files */,
 				82F007411A0B917A00AF77CE /* Timely-Bridging-Header.h */,
 				82F007461A0DC75900AF77CE /* properties.plist */,
+				82BEC0F41A2156EA00AD963C /* NavigationController.swift */,
 			);
 			path = Timely;
 			sourceTree = "<group>";
@@ -282,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82BEC0F31A213E8300AD963C /* CurvedArrow3.png in Resources */,
 				820AE4BF19FF9AE4002E9809 /* Main.storyboard in Resources */,
 				82F007491A13858100AF77CE /* DoorBell.wav in Resources */,
 				820AE4C419FF9AE4002E9809 /* LaunchScreen.xib in Resources */,
@@ -305,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				820AE4BC19FF9AE4002E9809 /* ViewController.swift in Sources */,
+				82BEC0F51A2156EA00AD963C /* NavigationController.swift in Sources */,
 				820AE4DA19FF9C19002E9809 /* TimerTableViewController.swift in Sources */,
 				820AE4DC19FF9DC6002E9809 /* TimerTableViewCell.swift in Sources */,
 				82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */,
@@ -436,10 +444,10 @@
 		820AE4D419FF9AE4002E9809 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Platkin (Y7JN6R32XC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Platkin (Y7JN6R32XC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -447,7 +455,7 @@
 				INFOPLIST_FILE = Timely/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4958d93c-cc6c-4524-aa57-81e41072c22a";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely/Timely-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -456,10 +464,10 @@
 		820AE4D519FF9AE4002E9809 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Platkin (Y7JN6R32XC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Platkin (Y7JN6R32XC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -467,7 +475,7 @@
 				INFOPLIST_FILE = Timely/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4958d93c-cc6c-4524-aa57-81e41072c22a";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely/Timely-Bridging-Header.h";
 			};
 			name = Release;

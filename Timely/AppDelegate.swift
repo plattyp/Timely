@@ -125,6 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Stop timer
         timer.invalidate()
+        timerSet = false
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

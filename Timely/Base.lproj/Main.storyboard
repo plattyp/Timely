@@ -79,6 +79,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Timely" id="88f-RJ-dta">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cJX-dk-4Aa">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="Z5R-Hp-VLV" kind="show" identifier="editTimerSegue" id="RtS-Lc-9xm"/>
                             </connections>
@@ -105,16 +106,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="68G-cb-vE2">
-                                <rect key="frame" x="16" y="152" width="288" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name your timer (e.g. Laundry)" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="68G-cb-vE2">
+                                <rect key="frame" x="16" y="152" width="288" height="41"/>
+                                <color key="tintColor" red="0.0" green="0.58039215690000001" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="E6L-ac-97R"/>
+                                    <constraint firstAttribute="height" constant="41" id="pxW-Dd-EaZ"/>
+                                </constraints>
+                                <color key="textColor" red="0.0" green="0.58039215690000001" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dA-mC-xe5">
-                                <rect key="frame" x="16" y="123" width="33" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dA-mC-xe5">
+                                <rect key="frame" x="16" y="123" width="55" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="WHC-OV-afg"/>
-                                    <constraint firstAttribute="width" constant="33" id="gTU-cG-4Md"/>
+                                    <constraint firstAttribute="width" constant="55" id="Yey-7n-OKw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -122,19 +129,20 @@
                             </label>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVU-Wt-eTg">
                                 <rect key="frame" x="0.0" y="225" width="320" height="216"/>
+                                <color key="tintColor" red="0.0" green="0.58039215690000001" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <date key="date" timeIntervalSinceReferenceDate="436168861.17313898">
                                     <!--2014-10-28 06:01:01 +0000-->
                                 </date>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer Length" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kw-zO-SPX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Length:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kw-zO-SPX">
                                 <rect key="frame" x="16" y="196" width="101" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69p-4c-sKj">
-                                <rect key="frame" x="16" y="476" width="288" height="45"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="16" y="476" width="288" height="60"/>
+                                <color key="backgroundColor" red="0.062745098040000002" green="0.25098039220000001" blue="0.62745098040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Create Timer">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -171,11 +179,15 @@
         <!--Navigation Controller-->
         <scene sceneID="Lge-g4-xra">
             <objects>
-                <navigationController storyboardIdentifier="navController" id="huQ-DT-P9w" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navController" id="huQ-DT-P9w" customClass="NavigationController" customModule="Timely" customModuleProvider="target" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ozp-35-oPK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.58039215690000001" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="Mml-m1-q0x" kind="relationship" relationship="rootViewController" id="FSM-Jr-R7i"/>

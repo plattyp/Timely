@@ -23,6 +23,8 @@ class TimerTableViewController: UITableViewController {
     //Variables needed to run actions within the Class
     var timers  = [TimersDefined]()
     var activeTimers = 0
+    var label:UILabel = UILabel()
+    var arrow:UIImageView = UIImageView()
     
     //Variables to store selected information about a given timer for Segues
     var timerSelectedRow = 0
@@ -50,7 +52,20 @@ class TimerTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchTimers()
-        // To understand when the app returns from the background, so that timers can be started again
+        
+        //Set Active Timers to 0
+        activeTimers = 0
+        
+        //Default the table view to have a footer with a White background to not show empty cells
+        var tblView =  UIView(frame: CGRectZero)
+        timerTable.tableFooterView = tblView
+        timerTable.tableFooterView?.hidden = true
+        timerTable.backgroundColor = UIColor.whiteColor()
+        
+        //If no timers are available (e.g. none have been created), then show message accordingly
+        showHideNoDataMessage()
+
+        //To understand when the app returns from the background, so that timers can be started again
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"initialize", name: UIApplicationWillEnterForegroundNotification,object: nil)
     }
     
@@ -58,6 +73,7 @@ class TimerTableViewController: UITableViewController {
         //Used to hide navigation once the segue returns after a value has been added
         if somethingAdded {
             self.navigationItem.hidesBackButton = true
+            initialize()
         }
         somethingAdded = false
     }
@@ -118,25 +134,13 @@ class TimerTableViewController: UITableViewController {
             //Reset to not active if the seconds go to 0
             if seconds == 1 {
                 timerItem.startedIndicator = false
-                //Kick off an alert
-                //alertUserAboutTimer()
             }
-            
-            activeTimers++
-            
         } else {
             myCell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             myCell.countdownLabel.text = ""
         }
-
-        //Deactivate the NSTimer if there are no currently running ones
-        if activeTimers == 0 && timerSet {
-            stopTimer()
-            timerSet = false
-        }
         
         var managedObject = timerItem
-        
         if managedObject.hasChanges {
             save()
         }
@@ -172,7 +176,7 @@ class TimerTableViewController: UITableViewController {
             return
         })
         
-        editAction.backgroundColor = UIColor.grayColor()
+        editAction.backgroundColor = UIColor(red: 0.945, green: 0.620, blue: 0.000, alpha: 1.00)
         
         var endAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "End", handler: {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
@@ -192,7 +196,7 @@ class TimerTableViewController: UITableViewController {
             return
         })
         
-        endAction.backgroundColor = UIColor.orangeColor()
+        endAction.backgroundColor = UIColor(red: 0.945, green: 0.412, blue: 0.000, alpha: 1.00)
         
         var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler: {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
@@ -207,7 +211,7 @@ class TimerTableViewController: UITableViewController {
             return
         })
         
-        deleteAction.backgroundColor = UIColor.redColor()
+        deleteAction.backgroundColor = UIColor(red: 0.929, green: 0.000, blue: 0.047, alpha: 1.00)
         
         if timerItem.startedIndicator == 1 {
             return [deleteAction, endAction]
@@ -223,6 +227,9 @@ class TimerTableViewController: UITableViewController {
     //After any edits have/haven't been made, start the timer back up
     override func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
         startTimer()
+        
+        //If after editing there are no more timers, show a data message
+        showHideNoDataMessage()
     }
     
     //Needed to display the editing buttons for the table
@@ -270,9 +277,53 @@ class TimerTableViewController: UITableViewController {
     
     //Used by the timer to refresh the table values
     func runCounter() {
-        timerTable.reloadData()
+        //Set activeTimers to 0
+        activeTimers = 0
+        
+        //Iterate through timers and get a count of active timers
+        for timer in enumerate(timers) {
+            activeTimers = activeTimers + timer.element.startedIndicator.integerValue
+        }
+        
+        //Deactivate the NSTimer if there are no currently running ones
+        if activeTimers == 0 && timerSet {
+            stopTimer()
+        } else {
+            timerTable.reloadData()
+            println("Active Timers: \(activeTimers)")
+            println("timerSet Value: \(timerSet)")
+            println("Table reloaded")
+        }
     }
     
+    func showHideNoDataMessage() {
+        //Check if there are no timers available
+        if timers.count == 0 {
+            // Creating a label
+            label = UILabel(frame: CGRect(x: 0, y: 10, width: CGRectGetWidth(self.view.bounds), height: 80))
+            label.center.x = self.view.center.x
+            label.center.y = self.view.center.y - 220
+            label.textAlignment = NSTextAlignment.Center
+            label.numberOfLines = 2
+            label.text = "Tap the + sign above to\n add some timers"
+            
+            // Creating Arrow Image
+            var image = UIImage(named: "CurvedArrow3.png")
+            arrow = UIImageView(frame: CGRectMake(100, 150, 50, 50))
+            arrow.image = image
+            arrow.center.x = self.view.bounds.width - 37
+            arrow.center.y = self.view.center.y - 240
+            
+            // Adding a label as a subview to the view
+            self.view.addSubview(label)
+            
+            // Adding a UIImageView as a subview to the view
+            self.view.addSubview(arrow)
+        } else {
+            label.hidden = true
+            arrow.hidden = true
+        }
+    }
     
     //
     // All methods for controlling interaction with the NSTimer Object
