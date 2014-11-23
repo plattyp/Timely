@@ -63,10 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate {
                 NSLog("%@", error)
             }
         }
-        
     }
     
     func application(application: UIApplication!, didReceiveRemoteNotification userInfo: [NSObject : NSObject]!) {
+        //Handle notification via Parse
+        PFPush.handlePush(userInfo)
     }
     
     func application(application: UIApplication!, didReceiveLocalNotification notification: UILocalNotification!) {
