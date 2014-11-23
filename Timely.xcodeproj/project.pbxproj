@@ -19,6 +19,7 @@
 		822A96891A1961CF008033C9 /* EditTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A96881A1961CF008033C9 /* EditTimerViewController.swift */; };
 		82BEC0F31A213E8300AD963C /* CurvedArrow3.png in Resources */ = {isa = PBXBuildFile; fileRef = 82BEC0F21A213E8300AD963C /* CurvedArrow3.png */; };
 		82BEC0F51A2156EA00AD963C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BEC0F41A2156EA00AD963C /* NavigationController.swift */; };
+		82D8E64A1A2292AC0060E0D1 /* GreenClockHandCoverSquareTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 82D8E6491A2292AC0060E0D1 /* GreenClockHandCoverSquareTransparent.png */; };
 		82F007241A093BCB00AF77CE /* TimersDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F007231A093BCB00AF77CE /* TimersDefined.swift */; };
 		82F0072A1A0B8F8300AF77CE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F007271A0B8F5800AF77CE /* CoreLocation.framework */; };
 		82F0072D1A0B90A100AF77CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F0072B1A0B90A100AF77CE /* Bolts.framework */; };
@@ -64,6 +65,7 @@
 		822A96881A1961CF008033C9 /* EditTimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTimerViewController.swift; sourceTree = "<group>"; };
 		82BEC0F21A213E8300AD963C /* CurvedArrow3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CurvedArrow3.png; sourceTree = "<group>"; };
 		82BEC0F41A2156EA00AD963C /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		82D8E6491A2292AC0060E0D1 /* GreenClockHandCoverSquareTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenClockHandCoverSquareTransparent.png; sourceTree = "<group>"; };
 		82F007231A093BCB00AF77CE /* TimersDefined.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimersDefined.swift; sourceTree = "<group>"; };
 		82F007271A0B8F5800AF77CE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		82F0072B1A0B90A100AF77CE /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		820AE4B319FF9AE4002E9809 /* Timely */ = {
 			isa = PBXGroup;
 			children = (
+				82D8E6491A2292AC0060E0D1 /* GreenClockHandCoverSquareTransparent.png */,
 				82BEC0F21A213E8300AD963C /* CurvedArrow3.png */,
 				82F007481A13858100AF77CE /* DoorBell.wav */,
 				820AE4B619FF9AE4002E9809 /* AppDelegate.swift */,
@@ -289,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82BEC0F31A213E8300AD963C /* CurvedArrow3.png in Resources */,
+				82D8E64A1A2292AC0060E0D1 /* GreenClockHandCoverSquareTransparent.png in Resources */,
 				820AE4BF19FF9AE4002E9809 /* Main.storyboard in Resources */,
 				82F007491A13858100AF77CE /* DoorBell.wav in Resources */,
 				820AE4C419FF9AE4002E9809 /* LaunchScreen.xib in Resources */,

@@ -12,7 +12,7 @@ import AVFoundation
 import AudioToolbox
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate {
 
     var window: UIWindow?
 
@@ -124,8 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         //Stop timer
-        timer.invalidate()
-        timerSet = false
+        timer.invalidate()     
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

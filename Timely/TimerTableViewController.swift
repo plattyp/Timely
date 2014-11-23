@@ -15,9 +15,6 @@ var somethingAdded = false
 //Timer variable
 var timer = NSTimer()
 
-//Determine if the timer variable has been started
-var timerSet = false
-
 class TimerTableViewController: UITableViewController {
 
     //Variables needed to run actions within the Class
@@ -57,7 +54,7 @@ class TimerTableViewController: UITableViewController {
         activeTimers = 0
         
         //Default the table view to have a footer with a White background to not show empty cells
-        var tblView =  UIView(frame: CGRectZero)
+        var tblView = UIView(frame: CGRectZero)
         timerTable.tableFooterView = tblView
         timerTable.tableFooterView?.hidden = true
         timerTable.backgroundColor = UIColor.whiteColor()
@@ -103,11 +100,19 @@ class TimerTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var myCell:TimerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as TimerTableViewCell
         
-        // Get the LogItem for this index
+        // Get the timer for this index
         let timerItem = timers[indexPath.row]
         
         var minutes = Int(timerItem.timerSeconds)/60
-        myCell.detailLabel.text = "\(minutes) minutes"
+        
+        //Handles the s after minutes if total minutes greater than 1
+        var pluralCharacter = ""
+        if minutes > 1 {
+            pluralCharacter = "s"
+        }
+        
+        //Set the standard Cell fields
+        myCell.detailLabel.text = "\(minutes) minute\(pluralCharacter)"
         myCell.titleLabel.text = timerItem.timerName
         
         //Resets it if it is passed the time of expiration
@@ -116,7 +121,7 @@ class TimerTableViewController: UITableViewController {
         }
         
         //Kicks off timer if there is one needed
-        if timerItem.startedIndicator == 1 && (Int(timerItem.timerSeconds) - Int(round(NSDate().timeIntervalSinceDate(timerItem.timeStarted)))) > 0 && timerSet == false {
+        if timerItem.startedIndicator == 1 && (Int(timerItem.timerSeconds) - Int(round(NSDate().timeIntervalSinceDate(timerItem.timeStarted)))) > 0 && timer.valid == false {
             startTimer()
         }
         
@@ -131,6 +136,11 @@ class TimerTableViewController: UITableViewController {
             //Set the label to display the newly updated time
             myCell.countdownLabel.text = displayTicker(seconds)
             
+            //Handle if the titleLabel is to large with the running timer
+            if countElements(timerItem.timerName) > 20 {
+                myCell.titleLabel.text = "\(timerItem.timerName.substringWithRange(Range(start: timerItem.timerName.startIndex,end: advance(timerItem.timerName.startIndex, 20)))).."
+            }
+            
             //Reset to not active if the seconds go to 0
             if seconds == 1 {
                 timerItem.startedIndicator = false
@@ -138,6 +148,11 @@ class TimerTableViewController: UITableViewController {
         } else {
             myCell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             myCell.countdownLabel.text = ""
+            
+            //Handle if the titleLabel is to large for the cell
+            if countElements(timerItem.timerName) > 33 {
+                myCell.titleLabel.text = "\(timerItem.timerName.substringWithRange(Range(start: timerItem.timerName.startIndex,end: advance(timerItem.timerName.startIndex, 32)))).."
+            }
         }
         
         var managedObject = timerItem
@@ -163,16 +178,13 @@ class TimerTableViewController: UITableViewController {
             (action: UITableViewRowAction!, indexPath: NSIndexPath!) in
             println("Triggered edit action \(action) atIndexPath: \(indexPath)")
             
-            if timerItem.startedIndicator == 1 {
-                self.alertUser("Timer Running", message: "A timer cannot be edited while running. Please end it and try again.")
-            } else {
-                //Set variables to be passed to Segue
-                self.timerSelectedRow = indexPath.row
-                self.timerEditing  = true
-                
-                //Perform the segue
-                self.performSegueWithIdentifier("editTimerSegue", sender: self)
-            }
+            //Set variables to be passed to Segue
+            self.timerSelectedRow = indexPath.row
+            self.timerEditing  = true
+            
+            //Perform the segue
+            self.performSegueWithIdentifier("editTimerSegue", sender: self)
+            
             return
         })
         
@@ -184,12 +196,10 @@ class TimerTableViewController: UITableViewController {
             
             //Set the timer to end within CoreData
             self.endTimer(indexPath)
-            
-            //Cancel any scheduled alerts with identifier
-            self.cancelScheduledAlert(timerItem.objectID.URIRepresentation())
     
             //Create an array containing the indexPath
             var array:Array = [indexPath]
+            
             //Refresh the row with animation
             self.timerTable.reloadRowsAtIndexPaths(array, withRowAnimation: UITableViewRowAnimation.Right)
             
@@ -239,40 +249,20 @@ class TimerTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //Create timer if one was not created
-        if timerSet == false {
+        if timer.valid == false {
             startTimer()
         }
         
-        var cell:TimerTableViewCell = tableView.cellForRowAtIndexPath(indexPath)! as TimerTableViewCell
-        cell.accessoryType = UITableViewCellAccessoryType.None
-        
-        // Get the LogItem for this index
+        // Get the timer for this index
         let timerItem = timers[indexPath.row]
         
-        //Set the label to display the newly updated time
-        cell.countdownLabel.text = displayTicker(Int(timerItem.timerSeconds))
-        
-        //Start the timer by setting the array index to true
-        timerItem.startedIndicator = true
-        
-        //Modify start time in Array to the current time
-        let startTime = NSDate()
-        timerItem.timeStarted = startTime
-        
-        //Update in persistent storage
-        var managedObject = timerItem
-        managedObject.setValue(true, forKey: "startedIndicator")
-        managedObject.setValue(NSDate(), forKey: "timeStarted")
-        save()
-        
-        //At this point the timers will be refreshed from the newly saved data
-        fetchTimers()
-        
-        //Get the date in which the timer should show the notification (Seconds plus the time started)
-        var fireDate = startTime.dateByAddingTimeInterval(Double(timerItem.timerSeconds))
-        
-        //Create the local notification
-        scheduleLocalAlert(fireDate,timerName: timerItem.timerName, timerID: timerItem.objectID.URIRepresentation())
+        // Check to see if the timer is currently running
+        if timerItem.startedIndicator == 1 {
+            alertUserForRestart("Timer Currently Running", message: "The timer is currently running, would you want to restart it?", action: "Restart", indexPath: indexPath)
+        } else {
+            //Kick off the timer
+            kickOffTimer(indexPath)
+        }
     }
     
     //Used by the timer to refresh the table values
@@ -286,12 +276,12 @@ class TimerTableViewController: UITableViewController {
         }
         
         //Deactivate the NSTimer if there are no currently running ones
-        if activeTimers == 0 && timerSet {
+        if activeTimers == 0 && timer.valid {
             stopTimer()
         } else {
             timerTable.reloadData()
             println("Active Timers: \(activeTimers)")
-            println("timerSet Value: \(timerSet)")
+            println("timer valid: \(timer.valid)")
             println("Table reloaded")
         }
     }
@@ -347,26 +337,72 @@ class TimerTableViewController: UITableViewController {
         return true
     }
     
-    //Used to create a timer
+    //Used to create a timer object
     func startTimer() {
         if timer.valid == false {
             timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "runCounter", userInfo: nil, repeats: true)
-            timerSet = true
             println("Timer Started")
         }
     }
     
-    //Used to stop a timer
+    //Used to invalidate a timer
     func stopTimer() {
         timer.invalidate()
-        timerSet = false
         println("Timer Stopped")
+    }
+    
+    //Functionally starts the timer for the user
+    func kickOffTimer(indexPath: NSIndexPath) {
+        // Get the timer for this index
+        let timerItem = timers[indexPath.row]
+        
+        var cell:TimerTableViewCell = tableView.cellForRowAtIndexPath(indexPath)! as TimerTableViewCell
+        cell.accessoryType = UITableViewCellAccessoryType.None
+        
+        //Set the label to display the newly updated time
+        cell.countdownLabel.text = displayTicker(Int(timerItem.timerSeconds))
+        
+        //Handle if the titleLabel is to large with the running timer
+        if countElements(timerItem.timerName) > 20 {
+            cell.titleLabel.text = "\(timerItem.timerName.substringWithRange(Range(start: timerItem.timerName.startIndex,end: advance(timerItem.timerName.startIndex, 20)))).."
+        }
+        
+        //Start the timer by setting the array index to true
+        timerItem.startedIndicator = true
+        
+        //Modify start time in Array to the current time
+        let startTime = NSDate()
+        timerItem.timeStarted = startTime
+        
+        //Update in persistent storage
+        var managedObject = timerItem
+        managedObject.setValue(true, forKey: "startedIndicator")
+        managedObject.setValue(NSDate(), forKey: "timeStarted")
+        save()
+        
+        //At this point the timers will be refreshed from the newly saved data
+        fetchTimers()
+        
+        //Get the date in which the timer should show the notification (Seconds plus the time started)
+        var fireDate = startTime.dateByAddingTimeInterval(Double(timerItem.timerSeconds))
+        
+        //Create the local notification
+        scheduleLocalAlert(fireDate,timerName: timerItem.timerName, timerID: timerItem.objectID.URIRepresentation())
+    }
+    
+    //Restart timer if one is currently running, but the user wishes to restart it
+    func restartTimer(indexPath: NSIndexPath) {
+        //Ends an existing timer
+        endTimer(indexPath)
+        
+        //Kicks off a new timer
+        kickOffTimer(indexPath)
     }
     
     //Function used to delete the timer from the table and reset the local notifications
     func deleteTimer(indexPath: NSIndexPath) {
-        // Find the LogItem object the user is trying to delete
-        let timerToDelete = self.timers[indexPath.row]
+        // Find the timer object the user is trying to delete
+        let timerToDelete = timers[indexPath.row]
         
         // Delete it from the managedObjectContext
         managedObjectContext?.deleteObject(timerToDelete)
@@ -381,8 +417,12 @@ class TimerTableViewController: UITableViewController {
         save()
     }
     
+    //Stops a timer if it is currently running
     func endTimer(indexPath: NSIndexPath) {
         let timerToEnd = self.timers[indexPath.row]
+        
+        //Cancel any alerts if they are scheduled
+        self.cancelScheduledAlert(timerToEnd.objectID.URIRepresentation())
         
         //Update in persistent storage
         var managedObject = timerToEnd
@@ -392,7 +432,6 @@ class TimerTableViewController: UITableViewController {
         //Reload timer values into array
         fetchTimers()
     }
-    
     
     //
     // All methods for scheduling/showing/cancelling alerts
@@ -436,23 +475,33 @@ class TimerTableViewController: UITableViewController {
         UIApplication.sharedApplication().cancelLocalNotification(notificationToCancel)
     }
     
-    //Standard Alert
-    func alertUser(tile: String, message: String) {
+    //Alert the user if they try to select a currently running timer
+    func alertUserForRestart(title: String, message: String, action: String, indexPath: NSIndexPath) {
         /* Create alert */
         let alert = UIAlertController(title: title,
             message: message,
             preferredStyle: .Alert)
         
-        /* Create action to handle OK dismissing */
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        /* Create action to handle cancel dismissing */
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil)
         
-        /* Add action to handle dismissing the alert */
-        alert.addAction(okAction)
+        /* Add cancel action to handle dismissing the alert */
+        alert.addAction(cancelAction)
+        
+        /* Closure to handle the restart */
+        let alertHandler = {(action:UIAlertAction!) -> Void in
+            self.restartTimer(indexPath)
+        }
+        
+        /* Create additional action */
+        let action = UIAlertAction(title: "\(action)", style: UIAlertActionStyle.Default, handler: alertHandler)
+        
+        /* Add additional action to alert */
+        alert.addAction(action)
         
         /* Set off Alert */
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
     
     
     //
